@@ -16,6 +16,12 @@ const char* password = "######"; // Your Password
  
 char status;
 double T,P,p0,a;
+
+/*Enter the static ip that you want to set
+IPAddress ip(192, 168, 43, 142); 
+IPAddress gateway(192, 168, 0, 1);
+IPAddress subnet(255, 255, 255, 0); 
+*/
 WiFiServer server(80);
 void setup() {
 Serial.begin(115200);
@@ -23,6 +29,9 @@ delay(100);
 dht.begin();
 Serial.print("Connecting to ");
 Serial.println(ssid);
+/*Configuring the WI-FI with the specified static IP.
+WiFi.config(ip, gateway, subnet);
+*/
 WiFi.begin(ssid, password);
  
 while (WiFi.status() != WL_CONNECTED) {
@@ -55,6 +64,11 @@ p0 = pressure.sealevel(P,ALTITUDE); // we're at 1655 meters (Boulder, CO)
 Serial.print("relative (sea-level) pressure: ");
 Serial.print(p0,2);
 Serial.print(" mb, ");
+Serial.print("\n");
+Serial.print("Temperature: ");
+Serial.print(dht.readTemperature());
+Serial.print("°C");
+Serial.print("\n");
 }
  
 float h = dht.readHumidity();
